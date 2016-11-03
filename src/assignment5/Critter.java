@@ -2,10 +2,6 @@ package assignment5;
 
 import java.util.List;
 
-
-
-
-
 public abstract class Critter {
 	/* NEW FOR PROJECT 5 */
 	public enum CritterShape {
@@ -50,7 +46,72 @@ public abstract class Critter {
 	}
 
 	protected String look(int direction, boolean steps) {
-		return "";
+		this.energy -= Params.look_energy_cost;
+		int xLook = this.x_coord;
+		int yLook = this.y_coord;
+		int whereLook = 0;
+		if (steps == false) {
+			whereLook = 1;
+		}
+		if (steps == true) {
+			whereLook = 2;
+		}
+		switch (direction) {
+		case 0: // right
+			xLook += whereLook;
+			xLook += 0;
+			break;
+		case 1: // right - up
+			xLook += whereLook;
+			yLook -= whereLook;
+			break;
+		case 2: // up
+			xLook +=0;
+			yLook -= whereLook;
+			break;
+		case 3: // left - up
+			xLook -= whereLook;
+			yLook -= whereLook;
+			break;
+		case 4: // left
+			xLook -= whereLook;
+			yLook -= 0;
+			break;
+		case 5: // left - down
+			xLook -= whereLook;
+			yLook += whereLook;
+			break;
+		case 6: // down
+			xLook += 0;
+			yLook += whereLook;
+			break;
+		case 7: // right - down
+			xLook += whereLook;
+			yLook += whereLook;
+			break;
+		}
+		// cases for overshooting (wrap around)
+		// x overshoots
+		if (xLook > Params.world_width - 1) {
+			xLook -= Params.world_width;
+		} // x undershoots
+		else if (xLook < 0) {
+			xLook += Params.world_height;
+		}
+		// y overshoots
+		if (yLook > Params.world_height - 1) {
+			yLook -= Params.world_height;
+		} // y undershoots
+		else if (yLook < 0) {
+			yLook += Params.world_height;
+		}
+		
+		for(Critter c : population){
+			if(c.x_coord == xLook && c.y_coord == yLook){
+				return c.toString();
+			}
+		}
+		return null;
 	}
 
 	/* rest is unchanged from Project 4 */
@@ -256,132 +317,132 @@ public abstract class Critter {
 
 	public static void worldTimeStep() {
 		// FIRST do doTimeStep on each bug
-				for (Critter a : population) {
-					a.doTimeStep();
+		for (Critter a : population) {
+			a.doTimeStep();
+		}
+		// SECOND resolve position conflicts
+		for (Critter a : population) { // check all critters for conflicts
+			for (Critter b : population) {
+				if (a == b) { /// skip when a and b are the same bug
+					continue;
 				}
-				// SECOND resolve position conflicts
-				for (Critter a : population) { // check all critters for conflicts
-					for (Critter b : population) {
-						if (a == b) { /// skip when a and b are the same bug
-							continue;
+				// critters are in same point
+				if (a.x_coord == b.x_coord && a.y_coord == b.y_coord) {
+					// only if they're still alive after thier timeStep
+					if (a.energy > 0 && b.energy > 0) {
+
+						// int values used to set back critter to original
+						// position if flee fails
+						int prevA_XCoord = a.x_coord;
+						int prevA_YCoord = a.y_coord;
+						int prevB_XCoord = b.x_coord;
+						int prevB_YCoord = b.y_coord;
+
+						boolean aFight = a.fight(b.toString());// check whether
+																// they want to
+																// fight
+						boolean bFight = b.fight(a.toString());
+						int aRoll;
+						int bRoll;
+
+						// trying to escape
+						if (!(aFight)) {
+							int x = a.x_coord;
+							int y = a.y_coord;
+							for (Critter z : population) {
+								if (a == z) {
+									continue;
+								} else if (x == z.x_coord && y == z.y_coord) {
+
+									a.x_coord = prevA_XCoord;
+									a.y_coord = prevA_YCoord;
+								}
+							}
 						}
-						// critters are in same point
-						if (a.x_coord == b.x_coord && a.y_coord == b.y_coord) {
-							// only if they're still alive after thier timeStep
-							if (a.energy > 0 && b.energy > 0) {
+						if (!(bFight)) {
+							int x = b.x_coord;
+							int y = b.y_coord;
+							for (Critter z : population) {
+								if (b == z) {
+									continue;
+								} else if (x == z.x_coord && y == z.y_coord) {
 
-								// int values used to set back critter to original
-								// position if flee fails
-								int prevA_XCoord = a.x_coord;
-								int prevA_YCoord = a.y_coord;
-								int prevB_XCoord = b.x_coord;
-								int prevB_YCoord = b.y_coord;
-
-								boolean aFight = a.fight(b.toString());// check whether
-																		// they want to
-																		// fight
-								boolean bFight = b.fight(a.toString());
-								int aRoll;
-								int bRoll;
-
-								// trying to escape
-								if (!(aFight)) {
-									int x = a.x_coord;
-									int y = a.y_coord;
-									for (Critter z : population) {
-										if (a == z) {
-											continue;
-										} else if (x == z.x_coord && y == z.y_coord) {
-				
-											a.x_coord = prevA_XCoord;
-											a.y_coord = prevA_YCoord;
-										}
-									}
-								}
-								if (!(bFight)) {
-									int x = b.x_coord;
-									int y = b.y_coord;
-									for (Critter z : population) {
-										if (b == z) {
-											continue;
-										} else if (x == z.x_coord && y == z.y_coord) {
-									
-											b.x_coord = prevB_XCoord;
-											b.y_coord = prevB_YCoord;
-										}
-									}
-								}
-
-								// both Critters Flee and end up on same spot
-								if ((!aFight && !bFight) && (a.x_coord == b.x_coord) && (a.y_coord == b.y_coord)) {
 									b.x_coord = prevB_XCoord;
 									b.y_coord = prevB_YCoord;
 								}
+							}
+						}
 
-								// if = then failed to escape
-								if ((a.x_coord == b.x_coord && a.y_coord == b.y_coord)) {
-									// if both critters are still alive
-									if (a.energy > 0 && b.energy > 0) {
-										if (aFight) {
-											aRoll = Critter.getRandomInt(a.energy);
-										} else {
-											aRoll = 0;
-										}
-										if (bFight) {
-											bRoll = Critter.getRandomInt(b.energy);
-										} else {
-											bRoll = 0;
-										}
-										if (aRoll > bRoll) { // a wins!!
-											a.energy += b.energy / 2;
-											b.energy = 0; // makes sure b will not fight
-															// again
-										} else if (bRoll > aRoll) {// b wins!
-											b.energy += a.energy / 2;
-											a.energy = 0; // makes sure a will not fight
-															// again
-										} else {// roll same number A wins!
-											a.energy += b.energy / 2;
-											b.energy = 0;
-										}
+						// both Critters Flee and end up on same spot
+						if ((!aFight && !bFight) && (a.x_coord == b.x_coord) && (a.y_coord == b.y_coord)) {
+							b.x_coord = prevB_XCoord;
+							b.y_coord = prevB_YCoord;
+						}
 
-									}
+						// if = then failed to escape
+						if ((a.x_coord == b.x_coord && a.y_coord == b.y_coord)) {
+							// if both critters are still alive
+							if (a.energy > 0 && b.energy > 0) {
+								if (aFight) {
+									aRoll = Critter.getRandomInt(a.energy);
+								} else {
+									aRoll = 0;
+								}
+								if (bFight) {
+									bRoll = Critter.getRandomInt(b.energy);
+								} else {
+									bRoll = 0;
+								}
+								if (aRoll > bRoll) { // a wins!!
+									a.energy += b.energy / 2;
+									b.energy = 0; // makes sure b will not fight
+													// again
+								} else if (bRoll > aRoll) {// b wins!
+									b.energy += a.energy / 2;
+									a.energy = 0; // makes sure a will not fight
+													// again
+								} else {// roll same number A wins!
+									a.energy += b.energy / 2;
+									b.energy = 0;
 								}
 
 							}
 						}
-					}
-				}
 
-				// THIRD apply rest energy cost
-				for (Critter a : population) {
-					a.energy -= Params.rest_energy_cost;
-				}
-				// FOURTH remove dead bugs
-				java.util.ArrayList<Critter> deadCrit = new java.util.ArrayList<Critter>();
-				for (Critter a : population) {
-					if (a.energy <= 0) {
-						deadCrit.add(a); // collects dead bugs
 					}
 				}
-				population.removeAll(deadCrit);
-				// FIFTH put children with population
-				population.addAll(babies);
-				babies.clear();
+			}
+		}
 
-				// SIXTH generate Algae(food source)
-				for (int i = 0; i < Params.refresh_algae_count; i++) {
-					try {
-						Critter.makeCritter(myPackage + ".Algae");
-					} catch (InvalidCritterException e) {
-						e.printStackTrace();
-					}
-				}
-				// Reset Moved boolean for all Critters
-				for (Critter x : population) {
-					x.moved = false;
-				}
-			
+		// THIRD apply rest energy cost
+		for (Critter a : population) {
+			a.energy -= Params.rest_energy_cost;
+		}
+		// FOURTH remove dead bugs
+		java.util.ArrayList<Critter> deadCrit = new java.util.ArrayList<Critter>();
+		for (Critter a : population) {
+			if (a.energy <= 0) {
+				deadCrit.add(a); // collects dead bugs
+			}
+		}
+		population.removeAll(deadCrit);
+		// FIFTH put children with population
+		population.addAll(babies);
+		babies.clear();
+
+		// SIXTH generate Algae(food source)
+		for (int i = 0; i < Params.refresh_algae_count; i++) {
+			try {
+				Critter.makeCritter(myPackage + ".Algae");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+		}
+		// Reset Moved boolean for all Critters
+		for (Critter x : population) {
+			x.moved = false;
+		}
+
 	}
 
 	public static void displayWorld() {
@@ -577,7 +638,5 @@ public abstract class Critter {
 	 */
 	public static void clearWorld() {
 	}
-
-	
 
 }
