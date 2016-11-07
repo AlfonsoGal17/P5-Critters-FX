@@ -1,26 +1,19 @@
 package assignment5;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -56,7 +49,7 @@ public class Main extends Application {
 	static boolean play = false;
 
 	public static void main(String[] args) {
-		// Store params as some crittes modyfi when initialized
+		// Store params as some critters modify when initialized
 		int width = Params.world_width;
 		int height = Params.world_height;
 		int walk = Params.walk_energy_cost;
@@ -79,7 +72,6 @@ public class Main extends Application {
 		for (String ls : listFiles) {
 			// ls.substring(0, ls.length()-5);
 			c.add(ls.substring(0, ls.length() - 5));
-
 		}
 		for (int i = 0; i < c.size(); i++) {
 			if (listOfFiles[i].isFile()) {
@@ -99,7 +91,6 @@ public class Main extends Application {
 						crits.add(c.get(i));
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					// e.printStackTrace();
 				}
 
@@ -120,9 +111,25 @@ public class Main extends Application {
 
 		launch(args);
 	}
-
+ static GridPane populationgrid = new GridPane();
 	@Override
 	public void start(Stage primaryStage) {
+		//starter code will REMOVE
+		try{
+			Stage secondaryStage = new Stage();
+			secondaryStage.setX(1200);
+			secondaryStage.setY(200);
+			populationgrid.setGridLinesVisible(true);
+			secondaryStage.setTitle("Critter World");
+			Scene scene = new Scene(populationgrid, Params.world_width,Params.world_height);
+			secondaryStage.setScene(scene);
+			secondaryStage.show();
+			Painter.paint();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		//end of starter code
 		primaryStage.setTitle("Critters");
 		// add descriptive text
 		Text actionTitle = new Text("Welcome, choose an action.");
@@ -139,6 +146,7 @@ public class Main extends Application {
 		ChoiceBox<String> cb = new ChoiceBox<>();
 		cb.setLayoutX(95);
 		cb.setLayoutY(50);
+		
 		// cb.getItems().addAll("Craig", "Algae", "AlgaephobicCritter",
 		// "Critter1", "Critter2", "Critter3", "Critter4");
 
@@ -164,7 +172,7 @@ public class Main extends Application {
 		stepbtn.setLayoutY(100);
 		stepbtn.setText("Step");
 		// add way to select amount of steps
-		Label lbl = new Label("Step ammount: ");
+		Label lbl = new Label("Step amount: ");
 		lbl.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
 		TextField txt = new TextField();
 		txt.setMaxWidth(50);
@@ -177,10 +185,11 @@ public class Main extends Application {
 		////////////////////////////////////////////////////
 		// keep count of time
 		Label timeLbl = new Label("World time: ");
+		
 		timeWorld.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
 		HBox t = new HBox();
 		t.getChildren().addAll(timeLbl, timeWorld);
-		t.setSpacing(10);
+	//	t.setSpacing(10);
 		t.setLayoutX(5);
 		t.setLayoutY(150);
 		/////////////////////////////////////////////////////////////
@@ -373,7 +382,7 @@ public class Main extends Application {
 								sleeptime *= 100;
 								Thread.sleep(550 - sleeptime);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 							Critter.worldTimeStep();
