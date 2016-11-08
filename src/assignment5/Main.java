@@ -14,6 +14,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -112,6 +113,7 @@ public class Main extends Application {
 		launch(args);
 	}
  static GridPane populationgrid = new GridPane();
+ //static TilePane populationgrid = new TilePane();
 	@Override
 	public void start(Stage primaryStage) {
 		//starter code will REMOVE
@@ -121,10 +123,10 @@ public class Main extends Application {
 			secondaryStage.setY(200);
 			populationgrid.setGridLinesVisible(true);
 			secondaryStage.setTitle("Critter World");
-			Scene scene = new Scene(populationgrid, Params.world_width,Params.world_height);
+			Scene scene = new Scene(populationgrid, 500,500);
 			secondaryStage.setScene(scene);
 			secondaryStage.show();
-			Painter.paint();
+			//Painter.paint();
 		}
 		catch(Exception e){
 			e.printStackTrace();
