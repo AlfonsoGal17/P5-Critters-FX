@@ -1,5 +1,6 @@
 package assignment5;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -15,8 +16,13 @@ public class Painter {
 		switch(shapeIndex) {
 		case 0: s = new Rectangle(size, size); 
 			s.setFill(javafx.scene.paint.Color.RED); break;
-		case 1: s = new Circle(size/2); 
-			s.setFill(javafx.scene.paint.Color.GREEN); break;
+//		case 1: s = new Circle(size/2); 
+//			s.setFill(javafx.scene.paint.Color.GREEN); break;
+		case 1: 
+			s = new Polygon( 0.0, 0.0,
+				    10.0, 20.0,
+				    10.0, 20.0 );//,50,0, 80, 80);
+
 		}
 		// set the outline of the shape
 		s.setStroke(javafx.scene.paint.Color.BLUE); // outline

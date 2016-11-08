@@ -91,7 +91,7 @@ public class Main extends Application {
 						crits.add(c.get(i));
 					}
 				} catch (Exception e) {
-					// e.printStackTrace();
+					e.printStackTrace();
 				}
 
 			} else if (listOfFiles[i].isDirectory()) {
@@ -179,10 +179,27 @@ public class Main extends Application {
 		txt.setText("1");
 		HBox hb = new HBox();
 		hb.getChildren().addAll(lbl, txt);
-		hb.setLayoutX(100);
+		hb.setLayoutX(90);
 		hb.setLayoutY(100);
 		stepbtn.setOnAction(e -> doStep(txt));
 		////////////////////////////////////////////////////
+		//make Seed button
+		
+				Button seedBtn = new Button();
+				seedBtn.setLayoutX(275);
+				seedBtn.setLayoutY(100);
+				seedBtn.setText("Seed");
+				// add way to select amount of steps
+				Label seedlbl = new Label("Seed #: ");
+				seedlbl.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
+				TextField seedtxt = new TextField();
+				seedtxt.setMaxWidth(50);
+				seedtxt.setText("1");
+				HBox seedhb = new HBox();
+				seedhb.getChildren().addAll(seedlbl, seedtxt);
+				seedhb.setLayoutX(350);
+				seedhb.setLayoutY(100);
+				seedBtn.setOnAction(e -> seedSet(seedtxt));
 		// keep count of time
 		Label timeLbl = new Label("World time: ");
 		
@@ -299,7 +316,7 @@ public class Main extends Application {
 		// add objects to window/
 		//aphbox, c4box, c3box, c2box, c1box, craigbox, a,
 		root.getChildren().addAll( sts, quitbtn, slider, tb, t, hb1, hb,
-				stepbtn, cb, btn, actionTitle);
+				stepbtn, cb, btn, actionTitle, seedBtn, seedhb);
 		for(HBox h : stat){
 			root.getChildren().add(h);
 		}
@@ -369,6 +386,11 @@ public class Main extends Application {
 		Critter.displayWorld();
 	}
 
+	//set seed values
+	private void seedSet(TextField f){
+		int seednum = Integer.parseInt(f.getText().toString());
+		Critter.setSeed(seednum);
+	}
 	// loops time to create animation
 	private void timeLoop(ToggleButton tb, Slider s) {
 		try {
