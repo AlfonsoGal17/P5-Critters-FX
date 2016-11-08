@@ -507,7 +507,9 @@ public abstract class Critter {
 		
 		
 		Shape s = null;
-		int size = (500/Params.world_height) * (500/Params.world_width);
+		int rowPixels = 500/Params.world_height;
+		int columnPixels = 500/Params.world_width;
+		int size = (rowPixels) * (columnPixels); //size of a box
 		Main.populationgrid.getChildren().clear(); // clean up grid.
 		//Main.populationgrid.setPrefSize(500, 500);
 		//Main.populationgrid.setPrefRows(Params.world_height);
@@ -515,34 +517,34 @@ public abstract class Critter {
 		
 		
 		//columns
-		for (int j = 0; j < Params.world_width; j++) {
-		    ColumnConstraints cc = new ColumnConstraints(500/Params.world_width);
+		for (int j = 0; j < 500/columnPixels; j++) {
+		    ColumnConstraints cc = new ColumnConstraints(columnPixels);
 		    //cc.setHgrow(Priority.ALWAYS);
 		    Main.populationgrid.getColumnConstraints().add(cc);
 		}
 
 		//ROWS
-		for (int j = 0; j < Params.world_height; j++) {
-		    RowConstraints rc = new RowConstraints(500/Params.world_height);
+		for (int j = 0; j < 500/rowPixels; j++) {
+		    RowConstraints rc = new RowConstraints(rowPixels);
 		    //rc.setVgrow(Priority.ALWAYS);
 		    Main.populationgrid.getRowConstraints().add(rc);
 		} 
 		
 		for (Critter c: population){
 			switch(c.viewShape()) {
-				case SQUARE: s = new Rectangle(size, size); 
+				case SQUARE: s = new Rectangle(rowPixels,columnPixels); 
 					s.setFill(c.viewFillColor()); 
 					break;
-				case CIRCLE: s = new Circle(size/2);
+				case CIRCLE: s = new Circle(columnPixels/2);
 					s.setFill(c.viewFillColor()); 
 					break;
-				case DIAMOND: s = Painter.createDiamond(c.x_coord, c.y_coord, size);
+				case DIAMOND: s = Painter.createDiamond(c.x_coord, c.y_coord, columnPixels);
 					s.setFill(c.viewFillColor());
 					break;
-				case STAR: s = Painter.createStar(c.x_coord, c.y_coord, size);
+				case STAR: s = Painter.createStar(c.x_coord, c.y_coord, columnPixels);
 					s.setFill(c.viewFillColor());
 					break;
-				case TRIANGLE: s = Painter.createTriangle(c.x_coord, c.y_coord, size);
+				case TRIANGLE: s = Painter.createTriangle(c.x_coord, c.y_coord, columnPixels);
 					s.setFill(c.viewFillColor());
 					break;
 			}
