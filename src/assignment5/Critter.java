@@ -2,6 +2,14 @@ package assignment5;
 
 import java.util.List;
 
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
+
 public abstract class Critter {
 	/* NEW FOR PROJECT 5 */
 	public enum CritterShape {
@@ -492,6 +500,56 @@ public abstract class Critter {
 			System.out.print("-");
 		}
 		System.out.print("+");
+		/////////////////////////
+		///////////////////////////////////
+		/////////////////////////
+		///////////////////////JAVAFX
+		
+		
+		Shape s = null;
+		int size = (500/Params.world_height) * (500/Params.world_width);
+		Main.populationgrid.getChildren().clear(); // clean up grid.
+		//Main.populationgrid.setPrefSize(500, 500);
+		//Main.populationgrid.setPrefRows(Params.world_height);
+		//Main.populationgrid.setPrefColumns(Params.world_width);
+		
+		
+		//columns
+		for (int j = 0; j < Params.world_width; j++) {
+		    ColumnConstraints cc = new ColumnConstraints(500/Params.world_width);
+		    //cc.setHgrow(Priority.ALWAYS);
+		    Main.populationgrid.getColumnConstraints().add(cc);
+		}
+
+		//ROWS
+		for (int j = 0; j < Params.world_height; j++) {
+		    RowConstraints rc = new RowConstraints(500/Params.world_height);
+		    //rc.setVgrow(Priority.ALWAYS);
+		    Main.populationgrid.getRowConstraints().add(rc);
+		} 
+		
+		for (Critter c: population){
+			switch(c.viewShape()) {
+				case SQUARE: s = new Rectangle(size, size); 
+					s.setFill(c.viewFillColor()); 
+					break;
+				case CIRCLE: s = new Circle(size/2);
+					s.setFill(c.viewFillColor()); 
+					break;
+				case DIAMOND: s = Painter.createDiamond(c.x_coord, c.y_coord, size);
+					s.setFill(c.viewFillColor());
+					break;
+				case STAR: s = Painter.createStar(c.x_coord, c.y_coord, size);
+					s.setFill(c.viewFillColor());
+					break;
+				case TRIANGLE: s = Painter.createTriangle(c.x_coord, c.y_coord, size);
+					s.setFill(c.viewFillColor());
+					break;
+			}
+			// set the outline of the shape
+			s.setStroke(javafx.scene.paint.Color.CRIMSON); // outline
+			Main.populationgrid.add(s, c.x_coord, c.y_coord);
+			} 
 	}
 
 	/*
