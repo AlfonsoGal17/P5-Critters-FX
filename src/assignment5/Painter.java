@@ -1,18 +1,18 @@
 package assignment5;
 import javafx.scene.shape.Circle;
-<<<<<<< HEAD
+
 import javafx.scene.shape.Polygon;
-=======
+
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.*;
->>>>>>> 6a22d7154c6874ce26f92d13a045007008945fee
+
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class Painter {
-<<<<<<< HEAD
+
 
 	/*
 	 * Returns a square or a circle, according to shapeIndex
@@ -35,9 +35,8 @@ public class Painter {
 		// set the outline of the shape
 		s.setStroke(javafx.scene.paint.Color.BLUE); // outline
 		return s;
-=======
-	
-	
+
+	}
 	
 	public static Polygon createTriangle(double x, double y, double side) {
 	    Polygon triangle = new Polygon();
@@ -63,7 +62,7 @@ public class Painter {
 	            (-(side/2)), Math.sqrt((side*side)-((side/2)*(side/2)))/2
 	            );
 	    return diamond;
->>>>>>> 6a22d7154c6874ce26f92d13a045007008945fee
+
 	}
 	
 	public static Polygon createStar(double x, double y, double side) {

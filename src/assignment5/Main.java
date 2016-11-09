@@ -3,7 +3,12 @@ package assignment5;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -44,7 +49,8 @@ public class Main extends Application {
 
 	static Integer[] p = new Integer[20];
 	static HBox[] stat = new HBox[20];
-
+	static boolean tplay = false;
+	static double splay =0.0;
 	static List<String> crits = new ArrayList<String>();
 	static List<String> c = new ArrayList<String>();
 	static boolean play = false;
@@ -122,6 +128,7 @@ public class Main extends Application {
 			secondaryStage.setX(1200);
 			secondaryStage.setY(200);
 			populationgrid.setGridLinesVisible(true);
+			
 			secondaryStage.setTitle("Critter World");
 			Scene scene = new Scene(populationgrid, 500,500);
 			secondaryStage.setScene(scene);
@@ -394,22 +401,65 @@ public class Main extends Application {
 		Critter.setSeed(seednum);
 	}
 	// loops time to create animation
-	private void timeLoop(ToggleButton tb, Slider s) {
+	private void timeLoop(ToggleButton tb, Slider s){
+		if(tb.isSelected()){
+			tplay = true;
+		}
+		else{
+			tplay = false;
+		}
+		
+		splay = s.getValue();
+	new Animate((long)300,tb,s);
+	}
+//		Task<Integer> task = new Task<Integer>(){
+//			@Override protected Integer call() throws Exception{
+//				while(tb.isSelected()){
+////					long sleeptime = (long) s.getValue();
+////					sleeptime *= 50;
+////					Thread.sleep(500 - sleeptime);
+//					Thread.sleep(50);
+//					Critter.worldTimeStep();
+//					
+//					Critter.displayWorld();
+//					worldTime++;
+//					timeWorld.setText(worldTime.toString());
+//					try {
+//						for(int j=0;j< crits.size();j++){
+//							p[j] = Critter.getInstances("assignment5."+crits.get(j)).size();
+//							stattxt[j].setText(p[j].toString());
+//						}
+//
+//					} catch (InvalidCritterException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//				return null;
+//			}
+//			
+//		};
+//		new Thread(task).start();
+		
+	
+	private void timeLoo(ToggleButton tb, Slider s) {
 		try {
 			if (tb.isSelected()) {
 				new Thread(new Runnable() {
+				
 					public void run() {
+						
 						while (tb.isSelected()) {
 							try {
 
 								long sleeptime = (long) s.getValue();
-								sleeptime *= 100;
-								Thread.sleep(550 - sleeptime);
+								sleeptime *= 50;
+								Thread.sleep(500 - sleeptime);
 							} catch (InterruptedException e) {
 								
 								e.printStackTrace();
 							}
 							Critter.worldTimeStep();
+						
 							Critter.displayWorld();
 							worldTime++;
 							timeWorld.setText(worldTime.toString());
@@ -438,6 +488,7 @@ public class Main extends Application {
 						}
 					}
 				}).start();
+				//});
 			} else {
 				tb.setSelected(false);
 			}
@@ -446,7 +497,57 @@ public class Main extends Application {
 		}
 
 	}
+	
+	class Animate{
+		Timer t;
+		public Animate(long delay, ToggleButton tb, Slider s){
+			t = new Timer();
+			double sInt = s.getValue();
+			t.schedule(new PlayTask(), 0,(long)(delay));
+			
+		}
+		class PlayTask extends TimerTask{
 
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Platform.runLater(new Runnable(){
+					public void run(){
+						if(tplay == false){
+							t.cancel();
+						}
+						else{
+							
+						}
+						try {
+							 Thread.sleep((long)splay*100);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						Critter.worldTimeStep();
+						
+						Critter.displayWorld();
+						worldTime++;
+						timeWorld.setText(worldTime.toString());
+						try {
+							for(int j=0;j< crits.size();j++){
+								p[j] = Critter.getInstances("assignment5."+crits.get(j)).size();
+								stattxt[j].setText(p[j].toString());
+							}
+
+						} catch (InvalidCritterException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+			
+			
+			
+			
+		}
+	}
 	// quit app
 	private void quitApp() {
 		System.exit(0);

@@ -2,6 +2,9 @@ package assignment5;
 
 import java.util.List;
 
+import com.sun.jmx.snmp.tasks.Task;
+
+import javafx.application.Platform;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
@@ -454,63 +457,73 @@ public abstract class Critter {
 	}
 
 	public static void displayWorld() {
-		// Prints top border
-		System.out.print("+");
-		for (int z = 0; z < Params.world_width; z++) {
-			System.out.print("-");
-		}
-		System.out.println("+");
-
-		// Prints side borders
-		int heightCounter = 0;
-		for (int y = 0; y < Params.world_width + 2; y++) {
-			if (heightCounter < Params.world_height) {
-				if (y == 0) {
-					System.out.print("|");
-				} else if (y == Params.world_width + 1) {
-					System.out.println("|");
-					y = -1;
-					heightCounter++;
-				}
-				// print Critters
-				else {
-
-					boolean critterHere = false;
-					boolean printedCritter = false;
-					for (int counter = 0; counter < population.size(); counter++) {
-						if (population.get(counter).x_coord == y - 1
-								&& population.get(counter).y_coord == heightCounter) {
-							if (!printedCritter) {
-								System.out.print(population.get(counter));
-								critterHere = true;
-								printedCritter = true;
-							}
-						}
-					}
-					if (!critterHere) {
-						System.out.print(" ");
-					}
-				}
-			}
-		}
-
-		// Prints bottom border
-		System.out.print("+");
-		for (int z = 0; z < Params.world_width; z++) {
-			System.out.print("-");
-		}
-		System.out.print("+");
-		/////////////////////////
-		///////////////////////////////////
-		/////////////////////////
-		///////////////////////JAVAFX
-		
-		
+//		// Prints top border
+//		System.out.print("+");
+//		for (int z = 0; z < Params.world_width; z++) {
+//			System.out.print("-");
+//		}
+//		System.out.println("+");
+//
+//		// Prints side borders
+//		int heightCounter = 0;
+//		for (int y = 0; y < Params.world_width + 2; y++) {
+//			if (heightCounter < Params.world_height) {
+//				if (y == 0) {
+//					System.out.print("|");
+//				} else if (y == Params.world_width + 1) {
+//					System.out.println("|");
+//					y = -1;
+//					heightCounter++;
+//				}
+//				// print Critters
+//				else {
+//
+//					boolean critterHere = false;
+//					boolean printedCritter = false;
+//					for (int counter = 0; counter < population.size(); counter++) {
+//						if (population.get(counter).x_coord == y - 1
+//								&& population.get(counter).y_coord == heightCounter) {
+//							if (!printedCritter) {
+//								System.out.print(population.get(counter));
+//								critterHere = true;
+//								printedCritter = true;
+//							}
+//						}
+//					}
+//					if (!critterHere) {
+//						System.out.print(" ");
+//					}
+//				}
+//			}
+//		}
+//
+//		// Prints bottom border
+//		System.out.print("+");
+//		for (int z = 0; z < Params.world_width; z++) {
+//			System.out.print("-");
+//		}
+//		System.out.print("+");
+//		/////////////////////////
+//		///////////////////////////////////
+//		/////////////////////////
+//		///////////////////////JAVAFX
+//		
+//		
 		Shape s = null;
 		int rowPixels = 500/Params.world_height;
 		int columnPixels = 500/Params.world_width;
 		int size = (rowPixels) * (columnPixels); //size of a box
-		Main.populationgrid.getChildren().clear(); // clean up grid.
+		Platform.runLater(new Runnable(){
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Main.populationgrid.getChildren().clear(); // clean up grid.
+				
+			}
+		
+		});
+		
+		
 		//Main.populationgrid.setPrefSize(500, 500);
 		//Main.populationgrid.setPrefRows(Params.world_height);
 		//Main.populationgrid.setPrefColumns(Params.world_width);
@@ -550,7 +563,20 @@ public abstract class Critter {
 			}
 			// set the outline of the shape
 			s.setStroke(javafx.scene.paint.Color.CRIMSON); // outline
-			Main.populationgrid.add(s, c.x_coord, c.y_coord);
+			final Shape ss = s;
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+				
+					Main.populationgrid.add(ss, c.x_coord, c.y_coord);
+					
+					
+				}
+				
+			});
+			
 			} 
 	}
 
