@@ -11,8 +11,13 @@
  * Fall 2016
  */
 
-
 package assignment5;
+
+import assignment5.Critter;
+import assignment5.Params;
+import javafx.scene.paint.Color;
+import assignment5.Critter.CritterShape;
+
 /**
  * 
  * @author Nicole
@@ -28,6 +33,7 @@ public class Critter1 extends Critter {
 	
 	@Override
 	public void doTimeStep() {
+		look(dir, false);
 		if(getEnergy() > 100){
 			Critter1 child = new Critter1();
 			int childDir = Critter.getRandomInt(8) % 3;
@@ -56,8 +62,12 @@ public class Critter1 extends Critter {
 
 	@Override
 	public CritterShape viewShape() {
-		// TODO Auto-generated method stub
-		return null;
+		return CritterShape.STAR;// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public javafx.scene.paint.Color viewFillColor(){
+		return javafx.scene.paint.Color.BLUEVIOLET;
 	}
 
 }
