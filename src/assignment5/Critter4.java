@@ -1,5 +1,5 @@
 /* CRITTERS 
- * EE422C Project 4 submission by
+ * EE422C Project 5 submission by
  * Replace <...> with your actual data.
  * Alfonso Galindo
  * ag49477
@@ -10,7 +10,6 @@
  * Slip days used: <0>
  * Fall 2016
  */
-
 package assignment5;
 /*
  * @author Alfonso Galindo
@@ -19,9 +18,11 @@ package assignment5;
  * if and only if its energy is the same as that 
  * needed to reproduce, it will reporduce sacrificing 
  * itself.
- * 
+ * always look up
  * This is a mean critter, it always wants to figt
  */
+
+import javafx.scene.paint.Color;
 
 public class Critter4 extends Critter{
 	@Override
@@ -37,13 +38,15 @@ public class Critter4 extends Critter{
 
 	@Override
 	public boolean fight(String oponent) {
-		
+		look(0,true);
 		return true;
 	}
 	@Override
 	public CritterShape viewShape() {
 		// TODO Auto-generated method stub
-		return null;
+		return CritterShape.DIAMOND;
 	}
+	@Override
+	public Color viewFillColor() { return Color.AQUA; }
 
 }

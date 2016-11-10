@@ -1,3 +1,15 @@
+/* CRITTERS 
+ * EE422C Project 5 submission by
+ * Replace <...> with your actual data.
+ * Alfonso Galindo
+ * ag49477
+ * 16450
+ * Nicole Muzquiz
+ * ngm339
+ * 16460
+ * Slip days used: <0>
+ * Fall 2016
+ */
 package assignment5;
 
 public class testcritter extends Critter{

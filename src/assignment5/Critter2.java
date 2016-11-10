@@ -1,5 +1,5 @@
 /* CRITTERS 
- * EE422C Project 4 submission by
+ * EE422C Project 5 submission by
  * Replace <...> with your actual data.
  * Alfonso Galindo
  * ag49477
@@ -10,7 +10,6 @@
  * Slip days used: <0>
  * Fall 2016
  */
-
 package assignment5;
 /**
  * 

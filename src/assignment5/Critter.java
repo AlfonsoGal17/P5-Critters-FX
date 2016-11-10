@@ -1,3 +1,15 @@
+/* CRITTERS 
+ * EE422C Project 5 submission by
+ * Replace <...> with your actual data.
+ * Alfonso Galindo
+ * ag49477
+ * 16450
+ * Nicole Muzquiz
+ * ngm339
+ * 16460
+ * Slip days used: <0>
+ * Fall 2016
+ */
 package assignment5;
 
 import java.util.List;
@@ -551,7 +563,7 @@ public abstract class Critter {
 				case CIRCLE: s = new Circle(columnPixels/2);
 					s.setFill(c.viewFillColor()); 
 					break;
-				case DIAMOND: s = Painter.createDiamond(c.x_coord, c.y_coord, columnPixels);
+				case DIAMOND: s = Painter.createDiamond(c.x_coord, c.y_coord, rowPixels);
 					s.setFill(c.viewFillColor());
 					break;
 				case STAR: s = Painter.createStar(c.x_coord, c.y_coord, columnPixels);

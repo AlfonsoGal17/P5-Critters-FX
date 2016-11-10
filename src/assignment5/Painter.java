@@ -1,3 +1,15 @@
+/* CRITTERS 
+ * EE422C Project 5 submission by
+ * Replace <...> with your actual data.
+ * Alfonso Galindo
+ * ag49477
+ * 16450
+ * Nicole Muzquiz
+ * ngm339
+ * 16460
+ * Slip days used: <0>
+ * Fall 2016
+ */
 package assignment5;
 import javafx.scene.shape.Circle;
 
@@ -44,9 +56,10 @@ public class Painter {
 	    triangle.setLayoutY(y);
 	    //3 points
 	    triangle.getPoints().addAll(
-	            x, (-(Math.sqrt((side*side)-((side/2)*(side/2)))/2)),
-	            (side/2), Math.sqrt((side*side)-((side/2)*(side/2)))/2,
-	            (-(side/2)), Math.sqrt((side*side)-((side/2)*(side/2)))/2);
+//	            x, (-(Math.sqrt((side*side)-((side/2)*(side/2)))/2)),
+//	            (side/2), Math.sqrt((side*side)-((side/2)*(side/2)))/2,
+//	            (-(side/2)), Math.sqrt((side*side)-((side/2)*(side/2)))/2);
+	    		side/2,0.0,side,side,0.0,side);
 	    return triangle;
 	}
 	
@@ -56,10 +69,11 @@ public class Painter {
 	    diamond.setLayoutY(y);
 	    //4 points
 	    diamond.getPoints().addAll(
-	            x, (-(Math.sqrt((side*side)-((side/2)*(side/2)))/2)),
-	            (side/2), Math.sqrt((side*side)-((side/2)*(side/2)))/2,
-	            x, Math.sqrt((side*side)-((side/2)*(side/2))/2),
-	            (-(side/2)), Math.sqrt((side*side)-((side/2)*(side/2)))/2
+//	            x, (-(Math.sqrt((side*side)-((side/2)*(side/2)))/2)),
+//	            (side/2), Math.sqrt((side*side)-((side/2)*(side/2)))/2,
+//	            x, Math.sqrt((side*side)-((side/2)*(side/2))/2),
+//	            (-(side/2)), Math.sqrt((side*side)-((side/2)*(side/2)))/2
+	    		side/2, 0.0,0.0,side/2,side/2, side,side,side/2
 	            );
 	    return diamond;
 
@@ -71,11 +85,12 @@ public class Painter {
 	    star.setLayoutY(y);
 	    //10 points
 	    star.getPoints().addAll( 
-	    		x, side,
-	    		side/2, x,
-	    		side, side,
-	    		x, side/2,
-	    		side, side/2
+//	    		x, side,
+//	    		side/2, x,
+//	    		side, side,
+//	    		x, side/2,
+//	    		side, side/2
+	    		0.0, side,side/2,0.0,side, side,0.0,side/2,side,side/2
 	            );
 	    return star;
 	}

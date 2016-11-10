@@ -1,3 +1,15 @@
+/* CRITTERS 
+ * EE422C Project 5 submission by
+ * Replace <...> with your actual data.
+ * Alfonso Galindo
+ * ag49477
+ * 16450
+ * Nicole Muzquiz
+ * ngm339
+ * 16460
+ * Slip days used: <0>
+ * Fall 2016
+ */
 package assignment5;
 
 import java.io.File;
@@ -195,8 +207,8 @@ public class Main extends Application {
 		//make Seed button
 		
 				Button seedBtn = new Button();
-				seedBtn.setLayoutX(275);
-				seedBtn.setLayoutY(100);
+				seedBtn.setLayoutX(135);
+				seedBtn.setLayoutY(200);
 				seedBtn.setText("Seed");
 				// add way to select amount of steps
 				Label seedlbl = new Label("Seed #: ");
@@ -206,8 +218,8 @@ public class Main extends Application {
 				seedtxt.setText("1");
 				HBox seedhb = new HBox();
 				seedhb.getChildren().addAll(seedlbl, seedtxt);
-				seedhb.setLayoutX(350);
-				seedhb.setLayoutY(100);
+				seedhb.setLayoutX(200);
+				seedhb.setLayoutY(200);
 				seedBtn.setOnAction(e -> seedSet(seedtxt));
 		// keep count of time
 		Label timeLbl = new Label("World time: ");
@@ -225,18 +237,19 @@ public class Main extends Application {
 		tb.setLayoutX(5);
 		tb.setLayoutY(200);
 		// add slider for animation speed
-		Slider slider = new Slider();
-		slider.setLayoutX(150);
-		slider.setLayoutY(200);
-		slider.setMin(0);
-		slider.setMax(5);
-		slider.setValue(0);
-		slider.setShowTickLabels(true);
-		slider.setShowTickMarks(true);
-		slider.setMajorTickUnit(1);
-		slider.setMinorTickCount(1);
-		slider.setBlockIncrement(1);
-		tb.setOnAction(e -> timeLoop(tb, slider));
+//		Slider slider = new Slider();
+//		slider.setLayoutX(150);
+//		slider.setLayoutY(200);
+//		slider.setMin(0);
+//		slider.setMax(5);
+//		slider.setValue(0);
+//		slider.setShowTickLabels(true);
+//		slider.setShowTickMarks(true);
+//		slider.setMajorTickUnit(1);
+//		slider.setMinorTickCount(1);
+//		slider.setBlockIncrement(1);
+		//tb.setOnAction(e -> timeLoop(tb, slider));
+		tb.setOnAction(e -> timeLoop(tb));
 		/////////////////////////////////////////////////////////////
 		// add quit button
 		Button quitbtn = new Button();
@@ -271,60 +284,12 @@ public class Main extends Application {
 
 		}
 
-//		Label algLbl = new Label("Algae: ");
-//		algtxt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox a = new HBox();
-//		a.getChildren().addAll(algLbl, algtxt);
-//		a.setSpacing(10);
-//		a.setLayoutX(5);
-//		a.setLayoutY(320);
-//		Label crlbl = new Label("Craig: ");
-//		craigtxt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox craigbox = new HBox();
-//		craigbox.getChildren().addAll(crlbl, craigtxt);
-//		craigbox.setSpacing(10);
-//		craigbox.setLayoutX(5);
-//		craigbox.setLayoutY(350);
-//		Label c1lbl = new Label("Critter1: ");
-//		c1txt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox c1box = new HBox();
-//		c1box.getChildren().addAll(c1lbl, c1txt);
-//		c1box.setSpacing(10);
-//		c1box.setLayoutX(5);
-//		c1box.setLayoutY(375);
-//		Label c2lbl = new Label("Critter2: ");
-//		c2txt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox c2box = new HBox();
-//		c2box.getChildren().addAll(c2lbl, c2txt);
-//		c2box.setSpacing(10);
-//		c2box.setLayoutX(5);
-//		c2box.setLayoutY(400);
-//		Label c3lbl = new Label("Critter3: ");
-//		c3txt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox c3box = new HBox();
-//		c3box.getChildren().addAll(c3lbl, c3txt);
-//		c3box.setSpacing(10);
-//		c3box.setLayoutX(5);
-//		c3box.setLayoutY(425);
-//		Label c4lbl = new Label("Critter4: ");
-//		c4txt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox c4box = new HBox();
-//		c4box.getChildren().addAll(c4lbl, c4txt);
-//		c4box.setSpacing(10);
-//		c4box.setLayoutX(5);
-//		c4box.setLayoutY(450);
-//		Label aphlbl = new Label("AlgaephobicCritter: ");
-//		alphtxt.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-//		HBox aphbox = new HBox();
-//		aphbox.getChildren().addAll(aphlbl, alphtxt);
-//		aphbox.setSpacing(10);
-//		aphbox.setLayoutX(5);
-//		aphbox.setLayoutY(475);
+
 		// make window
 		Pane root = new Pane();
 		// add objects to window/
 		//aphbox, c4box, c3box, c2box, c1box, craigbox, a,
-		root.getChildren().addAll( sts, quitbtn, slider, tb, t, hb1, hb,
+		root.getChildren().addAll( sts, quitbtn, tb, t, hb1, hb,
 				stepbtn, cb, btn, actionTitle, seedBtn, seedhb);
 		for(HBox h : stat){
 			root.getChildren().add(h);
@@ -373,20 +338,8 @@ public class Main extends Application {
 					p[j] = Critter.getInstances("assignment5."+crits.get(j)).size();
 					stattxt[j].setText(p[j].toString());
 				}
-//				alg = Critter.getInstances("assignment5.Algae").size();
-//				algtxt.setText(alg.toString());
-//				craig = Critter.getInstances("assignment5.Craig").size();
-//				craigtxt.setText(craig.toString());
-//				c1 = Critter.getInstances("assignment5.Critter1").size();
-//				c1txt.setText(c1.toString());
-//				c2 = Critter.getInstances("assignment5.Critter2").size();
-//				c2txt.setText(c2.toString());
-//				c3 = Critter.getInstances("assignment5.Critter3").size();
-//				c3txt.setText(c3.toString());
-//				c4 = Critter.getInstances("assignment5.Critter4").size();
-//				c4txt.setText(c4.toString());
-//				alph = Critter.getInstances("assignment5.AlgaephobicCritter").size();
-//				alphtxt.setText(alph.toString());
+
+
 			} catch (InvalidCritterException e) {
 				e.printStackTrace();
 			}
@@ -401,7 +354,7 @@ public class Main extends Application {
 		Critter.setSeed(seednum);
 	}
 	// loops time to create animation
-	private void timeLoop(ToggleButton tb, Slider s){
+	private void timeLoop(ToggleButton tb){
 		if(tb.isSelected()){
 			tplay = true;
 		}
@@ -409,39 +362,13 @@ public class Main extends Application {
 			tplay = false;
 		}
 		
-		splay = s.getValue();
-	new Animate((long)300,tb,s);
+	//	splay = s.getValue();
+	new Animate((long)300,tb);
 	}
-//		Task<Integer> task = new Task<Integer>(){
-//			@Override protected Integer call() throws Exception{
-//				while(tb.isSelected()){
-////					long sleeptime = (long) s.getValue();
-////					sleeptime *= 50;
-////					Thread.sleep(500 - sleeptime);
-//					Thread.sleep(50);
-//					Critter.worldTimeStep();
-//					
-//					Critter.displayWorld();
-//					worldTime++;
-//					timeWorld.setText(worldTime.toString());
-//					try {
-//						for(int j=0;j< crits.size();j++){
-//							p[j] = Critter.getInstances("assignment5."+crits.get(j)).size();
-//							stattxt[j].setText(p[j].toString());
-//						}
-//
-//					} catch (InvalidCritterException e) {
-//						e.printStackTrace();
-//					}
-//				}
-//				return null;
-//			}
-//			
-//		};
-//		new Thread(task).start();
+
 		
 	
-	private void timeLoo(ToggleButton tb, Slider s) {
+/*	private void timeLoo(ToggleButton tb, Slider s) {
 		try {
 			if (tb.isSelected()) {
 				new Thread(new Runnable() {
@@ -497,12 +424,12 @@ public class Main extends Application {
 		}
 
 	}
-	
+	*/
 	class Animate{
 		Timer t;
-		public Animate(long delay, ToggleButton tb, Slider s){
+		public Animate(long delay, ToggleButton tb){
 			t = new Timer();
-			double sInt = s.getValue();
+			
 			t.schedule(new PlayTask(), 0,(long)(delay));
 			
 		}
@@ -516,17 +443,7 @@ public class Main extends Application {
 						if(tplay == false){
 							t.cancel();
 						}
-						else{
-							
-						}
-						try {
-							 Thread.sleep((long)splay*100);
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
 						Critter.worldTimeStep();
-						
 						Critter.displayWorld();
 						worldTime++;
 						timeWorld.setText(worldTime.toString());
